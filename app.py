@@ -5,8 +5,14 @@ import os
 import pandas as pd
 import random
 
-# --- Configuration & API Setup ---
-GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6KCQ5RmtO33huqp5Sw5TlXSZrwTatj6RpIPaBNdXGTYcA")
+# --- Configuration & API Setup (Cloud Safe Architecture) ---
+# Pehle Streamlit Cloud ke internal secrets manager me check karega
+if "GEMINI_API_KEY" in st.secrets and st.secrets["GEMINI_API_KEY"]:
+    GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
+else:
+    # Local fallback ke liye system environment ya dummy string
+    GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6KCQ5RmtO33huqp5Sw5TlXSZrwTatj6RpIPaBNdXGTYcA")
+
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # --- Load Knowledge Base (RAG Context) ---
@@ -105,7 +111,7 @@ with tab1:
                 response_text = None
                 model_tried = "None"
                 
-                # Direct Production Endpoint configuration to bypass 401 token listing blocks on Cloud
+                # Direct Production Endpoint execution
                 try:
                     model_name = "gemini-2.5-flash"
                     model = genai.GenerativeModel(model_name=model_name)
