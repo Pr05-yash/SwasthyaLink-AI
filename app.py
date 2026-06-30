@@ -11,7 +11,7 @@ if "GEMINI_API_KEY" in st.secrets and st.secrets["GEMINI_API_KEY"]:
     GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
 else:
     # Local fallback ke liye system environment ya dummy string
-    GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6KCQ5RmtO33huqp5Sw5TlXSZrwTatj6RpIPaBNdXGTYcA")
+    GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6IYkFhlBEQeF9fuI5oNuUootQ-liFWZVVxPuHQHddzN4w")
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
