@@ -1,0 +1,18 @@
+{
+  "diseases": [
+    {
+      "name": "Dengue",
+      "symptoms": ["high fever", "severe headache", "pain behind eyes", "joint pain", "rash"],
+      "urgency": "High",
+      "home_care": "Maintain strict hydration, drink ORS, and take complete rest. You can take Paracetamol for fever control. Absolutely DO NOT take Ibuprofen or Aspirin.",
+      "next_steps": "Immediately visit the nearest healthcare clinic to get a complete blood count (CBC) and platelet check."
+    },
+    {
+      "name": "Common Cold / Viral Fever",
+      "symptoms": ["mild fever", "cough", "runny nose", "sore throat"],
+      "urgency": "Low",
+      "home_care": "Inhale steam, gargle with warm salt water, stay hydrated with warm fluids, and rest properly.",
+      "next_steps": "Monitor symptoms closely. If the fever persists for more than 3 days, consult a physician."
+    }
+  ]
+}
