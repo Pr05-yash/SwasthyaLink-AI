@@ -105,25 +105,18 @@ with tab1:
                 response_text = None
                 model_tried = "None"
                 
-                # Fetch available active models dynamically
+                # Direct Production Endpoint configuration to bypass 401 token listing blocks on Cloud
                 try:
-                    available_models = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
-                except Exception as list_err:
-                    available_models = []
-                    st.error(f"Failed to fetch model list: {list_err}")
-                
-                # Execute generation using the dynamically identified best engine
-                if available_models:
-                    for model_name in available_models:
-                        try:
-                            model = genai.GenerativeModel(model_name=model_name)
-                            combined_payload = f"{system_instruction}\n\nContext:\n{retrieved_context}\n\nQuery: {user_query}"
-                            response = model.generate_content(combined_payload)
-                            response_text = response.text
-                            model_tried = model_name
-                            break
-                        except Exception:
-                            continue
+                    model_name = "gemini-2.5-flash"
+                    model = genai.GenerativeModel(model_name=model_name)
+                    combined_payload = f"{system_instruction}\n\nContext:\n{retrieved_context}\n\nQuery: {user_query}"
+                    
+                    response = model.generate_content(combined_payload)
+                    response_text = response.text
+                    model_tried = model_name
+                except Exception as gen_err:
+                    response_text = None
+                    st.error(f"Inference Execution Error: {gen_err}")
                 
                 # Render results in clean English
                 if response_text:
@@ -137,7 +130,7 @@ with tab1:
                             "to regional epidemiological response units for community tracking."
                         )
                 else:
-                    st.error("❌ Inference Connection Failed completely. Please ensure your API key configuration is active.")
+                    st.error("❌ Inference Connection Failed completely. Please ensure your Secrets configuration has an active API key.")
         else:
             st.warning("Please type active symptoms before launching compilation.")
 
